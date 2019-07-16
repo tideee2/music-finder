@@ -11,9 +11,6 @@ export class SearchBarComponent implements OnInit {
   constructor(private apiSrv: ApiService) { }
 
   ngOnInit() {
-    this.apiSrv.getComplexAlbum('q').subscribe( data => {
-      console.log(data);
-    });
   }
 
 }

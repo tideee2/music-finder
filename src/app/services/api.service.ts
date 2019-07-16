@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {merge, Observable, of} from 'rxjs';
+import {forkJoin, merge, Observable, of} from 'rxjs';
+import {concatAll, map, tap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 
 const headers = new HttpHeaders({ 'Content-Type': 'text/plain'});
@@ -13,20 +14,26 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   getITunesAlbum(query: string = ''): Observable<any> {
-    return this.http.get(`${environment.iTunesApiUrl}?term=${query}&entity=album`);
-    // return this.http.get(`/apiITunes?term=${query}&entity=album`);
+    return this.http.get<string>(`${environment.iTunesApiUrl}?term=${query}&limit=100&entity=song`).pipe(
+      map(data => {
+        return data;
+      }),
+      tap (data => {
+        console.log(data);
+        return data;
+      })
+
+    );
   }
 
   getDeezerAlbum(query: string = ''): Observable<any> {
-    // return this.http.get(`${environment.deezerApiUrl}?q=${query}&output=json`);
-    return this.http.get(`http://localhost:4200/apiDeezer`, {responseType: 'text', headers});
+    return this.http.get(`/apiDeezer&q=${query}&limit=100`);
   }
 
   getComplexAlbum(query: string = ''): Observable<any> {
-    return merge(
+    return forkJoin(
       this.getITunesAlbum(query),
       this.getDeezerAlbum(query)
     );
-    // return of('qq')
   }
 }

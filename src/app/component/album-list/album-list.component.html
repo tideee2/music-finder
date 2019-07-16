@@ -1,1 +1,11 @@
-<p>album-list works!</p>
+<div class="container">
+  <div class="row" *ngFor="let track of trackList">
+    <div class="col">
+      <p>{{track.title}}</p>
+      <p>{{track.album}}</p>
+      <p>{{track.artist}}</p>
+      <p><a [href]="track.link">{{track.link}}</a></p>
+      <img [src]="track.image">
+    </div>
+  </div>
+</div>
