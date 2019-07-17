@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Track} from '../../models/Track';
 import {ApiService} from '../../services/api.service';
 import * as _ from 'lodash';
@@ -8,16 +8,28 @@ import * as _ from 'lodash';
   templateUrl: './album-list.component.html',
   styleUrls: ['./album-list.component.css']
 })
-export class AlbumListComponent implements OnInit {
+export class AlbumListComponent implements OnInit, OnChanges {
 
   trackList: Track[] = [];
-
+  @Input() searchQuery;
   constructor(private apiSrv: ApiService) { }
 
   ngOnInit() {
-    this.apiSrv.getComplexAlbum('Recovery').subscribe( data => {
+
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+    this.getResults();
+  }
+
+  getResults() {
+    this.apiSrv.getComplexAlbum(this.searchQuery).subscribe( data => {
       console.log(data[0]);
       console.log(data[1]);
+      // if (!data[0] || !data[1] || !data[1].error || data[0].resultCount === 0) {
+      //   return false;
+      // }
       if (this.isITunesData(data[0])) {
         console.log(this.iTunesConvert(data[0]));
       }

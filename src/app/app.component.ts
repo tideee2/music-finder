@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'music-finder';
+
+  searchQuery = '';
+
+  getSearchQuery(query: string) {
+    console.log(query);
+    this.searchQuery = query;
+  }
 }

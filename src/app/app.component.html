@@ -1,2 +1,2 @@
-<app-search-bar></app-search-bar>
-<app-album-list></app-album-list>
+<app-search-bar (search)="getSearchQuery($event)"></app-search-bar>
+<app-album-list [searchQuery]="searchQuery"></app-album-list>
