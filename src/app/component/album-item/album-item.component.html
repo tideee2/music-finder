@@ -1,1 +1,10 @@
-<p>album-item works!</p>
+<div class="track-item" [style.background-image]="'url(' + track.image + ')'">
+  <a [href]="track.link">
+    <div class="text">
+      <p>{{track.title}}</p>
+      <p>{{track.album}}</p>
+      <p>{{track.artist}}</p>
+    </div>
+  </a>
+  <!--<img [src]="track.image">-->
+</div>

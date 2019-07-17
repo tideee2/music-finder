@@ -1,11 +1,14 @@
-<div class="container">
-  <div class="row" *ngFor="let track of trackList">
-    <div class="col">
-      <p>{{track.title}}</p>
-      <p>{{track.album}}</p>
-      <p>{{track.artist}}</p>
-      <p><a [href]="track.link">{{track.link}}</a></p>
-      <img [src]="track.image">
+<div class="container mt-5">
+  <ng-container *ngIf="trackList.length; else noData">
+    <div class="list-container d-flex flex-row flex-wrap ">
+      <app-album-item [track]="singleTrack" *ngFor="let singleTrack of trackList" class="q"></app-album-item>
     </div>
-  </div>
+  </ng-container>
+  <ng-template #noData>
+    <div class="row justify-content-center">
+      <div class="empty-msg ">
+        No data
+      </div>
+    </div>
+  </ng-template>
 </div>

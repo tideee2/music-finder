@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Track} from '../../models/Track';
 
 @Component({
   selector: 'app-album-item',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./album-item.component.css']
 })
 export class AlbumItemComponent implements OnInit {
-
+  @Input() track: Track = null;
   constructor() { }
 
   ngOnInit() {

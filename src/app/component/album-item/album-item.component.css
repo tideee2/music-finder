@@ -1,0 +1,33 @@
+.track-item {
+  position: relative;
+  border: 3px solid #bbbbbb;
+  width: 250px;
+  height: 250px;
+  background-size: contain;
+  /*background-repeat: no-repeat;*/
+  color: #fff;
+  margin: 10px;
+  overflow: hidden;
+}
+
+.track-item a {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  text-decoration: none;
+  background: rgba(0,0,0,0.8);
+  font-weight: bold;
+  transition: 0.3s all;
+}
+.track-item .text {
+
+}
+.track-item a:hover {
+  text-decoration: none;
+  background: rgba(0,0,0,0.4);
+
+}
