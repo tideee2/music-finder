@@ -14,20 +14,11 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   getITunesAlbum(query: string = ''): Observable<any> {
-    return this.http.get<string>(`${environment.iTunesApiUrl}?term=${query}&limit=100&entity=song`).pipe(
-      map(data => {
-        return data;
-      }),
-      tap (data => {
-        console.log(data);
-        return data;
-      })
-
-    );
+    return this.http.get<string>(`${environment.iTunesApiUrl}?term=${query}&limit=100&entity=album`);
   }
 
   getDeezerAlbum(query: string = ''): Observable<any> {
-    return this.http.get(`/apiDeezer&q=${query}&limit=100`);
+    return this.http.get(`/apiDeezer&q=artist:"${query}"&limit=100`);
   }
 
   getComplexAlbum(query: string = ''): Observable<any> {

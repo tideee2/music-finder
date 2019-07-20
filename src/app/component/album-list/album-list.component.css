@@ -1,15 +1,28 @@
 .list-container {
   width: 95%;
-  margin:0 auto;
+  margin: 0 auto;
 }
+
 .q {
   animation: fadeIn ease 0.7s;
 }
-@keyframes fadeIn{
+
+@keyframes fadeIn {
   0% {
-    opacity:0;
+    opacity: 0;
   }
   100% {
-    opacity:1;
+    opacity: 1;
   }
+}
+
+.loader {
+  position: absolute;
+  display: flex;
+  top: 30%;
+  width: 100%;
+  justify-content: center;
+}
+.loader img {
+  width: 50px;
 }

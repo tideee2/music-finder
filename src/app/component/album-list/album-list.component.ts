@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 export class AlbumListComponent implements OnInit, OnChanges {
 
   trackList: Track[] = [];
+  showLoader = false;
   @Input() searchQuery;
   constructor(private apiSrv: ApiService) { }
 
@@ -20,26 +21,41 @@ export class AlbumListComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     console.log(changes);
-    this.getResults();
+    this.trackList = [];
+    if (!changes.searchQuery.firstChange) {
+      this.showLoader = true;
+      this.getResults();
+    }
   }
 
   getResults() {
-    this.apiSrv.getComplexAlbum(this.searchQuery).subscribe( data => {
+    this.apiSrv.getComplexAlbum(this.searchQuery).subscribe( (data: Array<any>) => {
+      console.log(data);
       console.log(data[0]);
       console.log(data[1]);
-      // if (!data[0] || !data[1] || !data[1].error || data[0].resultCount === 0) {
-      //   return false;
-      // }
-      if (this.isITunesData(data[0])) {
-        console.log(this.iTunesConvert(data[0]));
+      this.showLoader = false;
+      if (!this.isEmptyData(data)) {
+        return;
       }
-      if (this.isDeezerData(data[1])) {
-        console.log(this.deezerConvert(data[1]));
-      }
+      console.log('???')
+      data.forEach((element, index) => {
+        console.log('+++')
+        let temp;
+        if (this.isITunesData(element)) {
+          temp = this.iTunesConvert(element);
+        }
+        if (this.isDeezerData(element)) {
+          temp = this.deezerConvert(element);
+        }
+        this.trackList = _.unionBy(this.trackList, temp, 'title', 'album', 'artist');
+      });
       console.log('---------');
-      this.trackList = _.unionBy(this.iTunesConvert(data[0]), this.deezerConvert(data[1]), 'title', 'album', 'artist');
       console.log(this.trackList);
     });
+  }
+
+  isEmptyData(data: Array<any>): boolean {
+    return !data[0] || !data[1] || !data[1].error || data[0].resultCount === 0;
   }
 
   iTunesConvert(list): Track[] {
